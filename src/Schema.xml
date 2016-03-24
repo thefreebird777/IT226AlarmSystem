@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<xs:element name="alarm" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:complexType>
+        <xs:sequence>
+            <xs:element name="dateTime">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="month" type="xs:decimal"/>
+                        <xs:element name="day" type="xs:decimal"/>
+                        <xs:element name="hour" type="xs:decimal"/>
+                        <xs:element name="minutes" type="xs:decimal"/>
+                        <xs:element name="message" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="timer">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="hour" type="xs:decimal"/>
+                        <xs:element name="minutes" type="xs:decimal"/>
+                        <xs:element name="message" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+</xs:element>
