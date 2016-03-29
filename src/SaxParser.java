@@ -1,22 +1,32 @@
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.xml.sax.Attributes;
+import org.xml.sax.SAXException;
+import org.xml.sax.helpers.DefaultHandler;
+
 import javax.xml.parsers.*;
-
-import org.xml.sax.*;
-import org.xml.sax.helpers.*;
-
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 import java.io.File;
 import java.io.IOException;
+import java.util.Scanner;
 
 /**
  * Created by Ian on 3/24/2016.
  */
 public class SaxParser {
     static public void main(String[] args) throws ParserConfigurationException, SAXException, IOException {
+        DomParser domParser = new DomParser();
+        domParser.run();
         File file = new File("Instance.xml");
         SAXParserFactory spf = SAXParserFactory.newInstance();
         spf.setNamespaceAware(true);
         SAXParser saxParser = spf.newSAXParser();
         UserHandler userhandler = new UserHandler();
-        saxParser.parse(file , userhandler);
+        saxParser.parse(file, userhandler);
     }
 
     static class UserHandler extends DefaultHandler {
@@ -85,6 +95,52 @@ public class SaxParser {
             if (bMessage) {
                 //obj.setMessage(new String(ch, start, length));
                 bMessage = false;
+            }
+        }
+    }
+
+    static class DomParser {
+        public void run() {
+            try {
+
+                DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+                DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+
+                Document doc = docBuilder.newDocument();
+                Element rootElement = doc.createElement("alarm");
+                doc.appendChild(rootElement);
+
+                Element month = doc.createElement("month");
+                month.appendChild(doc.createTextNode(obj.getMonth()));
+                rootElement.appendChild(month);
+
+               Element day = doc.createElement("day");
+                day.appendChild(doc.createTextNode(obj.getDay()));
+                rootElement.appendChild(day);
+
+                Element hour = doc.createElement("hour");
+                hour.appendChild(doc.createTextNode(obj.getHour()));
+                rootElement.appendChild(hour);
+
+                Element minutes = doc.createElement("minutes");
+                minutes.appendChild(doc.createTextNode(obj.getMinutes()));
+                rootElement.appendChild(minutes);
+
+                Element message = doc.createElement("message");
+                message.appendChild(doc.createTextNode(obj.getMessage()));
+                rootElement.appendChild(message);
+
+                TransformerFactory transformerFactory = TransformerFactory.newInstance();
+                Transformer transformer = transformerFactory.newTransformer();
+                DOMSource source = new DOMSource(doc);
+                StreamResult result = new StreamResult(new File("Instance.xml"));
+
+                transformer.transform(source, result);
+
+            } catch (ParserConfigurationException pce) {
+                pce.printStackTrace();
+            } catch (TransformerException tfe) {
+                tfe.printStackTrace();
             }
         }
     }
