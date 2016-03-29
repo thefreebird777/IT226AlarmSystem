@@ -1,4 +1,3 @@
-package it226;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -23,7 +22,7 @@ public class Timer extends javax.swing.JFrame {
         initComponents();
     }
     String message="";
-
+    Main.DomParser domParser = new Main.DomParser();
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -161,7 +160,7 @@ public class Timer extends javax.swing.JFrame {
          else{
              message=messageText.getText();
          }
-        
+        domParser.write("", "",Integer.toString(hour),Integer.toString(minute), message);
         AlarmBase timer= AlarmBase.createTimer(hour,minute,message); 
         this.dispose();
     }//GEN-LAST:event_submitButActionPerformed
@@ -174,7 +173,13 @@ public class Timer extends javax.swing.JFrame {
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
        Calendar c = new GregorianCalendar();
-	int hours = c.get(Calendar.HOUR)+12;
+       int hours=0;
+       if(c.get(Calendar.AM_PM)==1){
+	 hours = c.get(Calendar.HOUR)+12;
+       }
+       else{
+          hours=c.get(Calendar.HOUR);
+       }
 	int mins = c.get(Calendar.MINUTE);
         if(mins<10){
         this.hourLabel.setText(hours+":0"+mins);

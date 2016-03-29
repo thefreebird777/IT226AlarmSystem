@@ -1,5 +1,3 @@
-package it226;
-
 import org.w3c.dom.Node;
 
 import javax.swing.*;
@@ -15,7 +13,7 @@ public class AlarmBase {
     public static int alarmMinute;
     public static String alarmMessage;
     public static int alarmDate;
-
+    public static Sound sound = new Sound();
 
     //date alarm
     public AlarmBase(Node node, int alarmH, int alarmM, String alarmMessage, int alarmDay, int alarmMonth) {
@@ -65,12 +63,16 @@ public class AlarmBase {
                     int mins = c.get(Calendar.MINUTE);
                     if (hr < hours || (hr == hours && min <= mins)) {
                         if (message.equals("")) {
+                            sound.makeSound();
                             JOptionPane.showMessageDialog(null, "Time is UP!");
-
+                            sound.stop();
+                            mainObject.deletion(getNode());
                             break;
                         } else {
+                            sound.makeSound();
                             JOptionPane.showMessageDialog(null, message);
-
+                            sound.stop();
+                            mainObject.deletion(getNode());
                             break;
                         }
                     }
@@ -79,7 +81,7 @@ public class AlarmBase {
         };
         t.setPriority(Thread.MIN_PRIORITY);
         t.start();
-        mainObject.deletion(getNode());
+        
     }
 
     public void checkAlarm(final int hr, final int min, final String message, final int mnth, final int dy) {
@@ -96,12 +98,16 @@ public class AlarmBase {
                     if (mnth < month || (mnth == month && dy <= day)) {
                         if (hr < hours || (hr == hours && min <= mins)) {
                             if (message.equals("")) {
+                                sound.makeSound();
                                 JOptionPane.showMessageDialog(null, "Time is UP!");
-
+                                sound.stop();
+                                mainObject.deletion(getNode());
                                 break;
                             } else {
+                                sound.makeSound();
                                 JOptionPane.showMessageDialog(null, message);
-
+                                sound.stop();
+                                mainObject.deletion(getNode());
                                 break;
                             }
                         }
@@ -111,7 +117,6 @@ public class AlarmBase {
         };
         t.setPriority(Thread.MIN_PRIORITY);
         t.start();
-        mainObject.deletion(getNode());
     }
 
     public void setDateAlarmHour(int alarmH) {

@@ -1,4 +1,3 @@
-package it226;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -27,6 +26,7 @@ import java.util.ArrayList;
  */
 public class Main {
     static int count = 0;
+    static int nlength=0;
 
     /**
      * @param args the command line arguments
@@ -35,6 +35,8 @@ public class Main {
         DomParser domParser = new DomParser();
         domParser.write("4", "7", "9", "11", "Test");
         domParser.write("5", "11", "23", "1444", "Test2");
+        domParser.write("6", "11", "23", "1444", "Test3");
+        domParser.write("6", "11", "23", "1444", "Test4");
         AlarmHome main = new AlarmHome();
         main.setVisible(true);
         UserHandler userhandler = new UserHandler();
@@ -108,9 +110,9 @@ public class Main {
                     DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
                     Document doc = dBuilder.parse(inputFile);
                     doc.getDocumentElement().normalize();
-
+                    nlength++;
                     NodeList nList = doc.getElementsByTagName("alarm" + Integer.toString(count - 1));
-
+                    
                     for (int temp = 0; temp < nList.getLength(); temp++) {
                         Node nNode = nList.item(temp);
                         if (nNode.getNodeType() == Node.ELEMENT_NODE) {
@@ -122,7 +124,6 @@ public class Main {
                             messageAL.add(eElement.getElementsByTagName("message").item(0).getTextContent());
                         }
                     }
-
                 }
 
                 DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();

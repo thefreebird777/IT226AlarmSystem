@@ -1,4 +1,3 @@
-package it226;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -223,7 +222,13 @@ public class AlarmClock extends javax.swing.JFrame {
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         Calendar c = new GregorianCalendar();
-	int hours = c.get(Calendar.HOUR)+12;
+        int hours=0;
+        if(c.get(Calendar.AM_PM)==1){
+	 hours = c.get(Calendar.HOUR)+12;
+       }
+       else{
+            hours=c.get(Calendar.HOUR);
+       }
 	int mins = c.get(Calendar.MINUTE);
         if(mins<10){
         this.hourLabel.setText(hours+":0"+mins);
