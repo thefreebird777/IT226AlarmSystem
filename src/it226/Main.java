@@ -4,7 +4,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
@@ -38,81 +37,51 @@ public class Main {
         domParser.write("5", "11", "23", "1444", "Test2");
         AlarmHome main = new AlarmHome();
         main.setVisible(true);
-        File file = new File("Instance.xml");
-        SAXParserFactory spf = SAXParserFactory.newInstance();
-        spf.setNamespaceAware(true);
-        SAXParser saxParser = spf.newSAXParser();
         UserHandler userhandler = new UserHandler();
-        saxParser.parse(file, userhandler);
-
+        userhandler.read();
     }
 
     static class UserHandler extends DefaultHandler {
-        //Class obj = new Class();
+        AlarmBase alarmBase;
         String month;
         String day;
         String hour;
         String minutes;
+        String message;
 
-        boolean bMonth = false;
-        boolean bDay = false;
-        boolean bHour = false;
-        boolean bMinutes = false;
-        boolean bMessage = false;
+        public void read() {
+            try{
+                if (new File("Instance.xml").isFile()) {
+                    File inputFile = new File("Instance.xml");
+                    DocumentBuilderFactory dbFactory
+                            = DocumentBuilderFactory.newInstance();
+                    DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+                    Document doc = dBuilder.parse(inputFile);
+                    doc.getDocumentElement().normalize();
 
-        public void startElement(String uri,
-                                 String localName, String qName, Attributes attributes) throws SAXException {
-            if (qName.equalsIgnoreCase("MONTH")) {
-                bMonth = true;
-            }
-            if (qName.equalsIgnoreCase("DAY")) {
-                bDay = true;
-            }
-            if (qName.equalsIgnoreCase("HOUR")) {
-                bHour = true;
-            }
-            if (qName.equalsIgnoreCase("MINUTES")) {
-                bMinutes = true;
-            }
-            if (qName.equalsIgnoreCase("MESSAGE")) {
-                bMessage = true;
+                    NodeList nList = doc.getElementsByTagName("alarm" + Integer.toString(count - 1));
+
+                    for (int temp = 0; temp < nList.getLength(); temp++) {
+                        Node nNode = nList.item(temp);
+                        if (nNode.getNodeType() == Node.ELEMENT_NODE) {
+                            Element eElement = (Element) nNode;
+                            month = eElement.getElementsByTagName("month").item(0).getTextContent();
+                            day = eElement.getElementsByTagName("day").item(0).getTextContent();
+                            hour = eElement.getElementsByTagName("hour").item(0).getTextContent();
+                            minutes = eElement.getElementsByTagName("minutes").item(0).getTextContent();
+                            message  = eElement.getElementsByTagName("message").item(0).getTextContent();
+                        }
+                    }
+                    alarmBase = new AlarmBase(Integer.parseInt(hour), Integer.parseInt(minutes), message, Integer.parseInt(day), Integer.parseInt(month));
+                }
+            } catch (ParserConfigurationException e) {
+                e.printStackTrace();
+            } catch (SAXException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
-
-        public void endElement(String uri,
-                               String localName, String qName) throws SAXException {
-
-        }
-
-        public void characters(char ch[], int start, int length) throws SAXException {
-
-            if (bMonth) {
-                month = (new String(ch, start, length));
-                //obj.setMonth(Integer.parseInt(month));
-                bMonth = false;
-            }
-            if (bDay) {
-                day = (new String(ch, start, length));
-                //obj.setDay(Integer.parseInt(day));
-                bDay = false;
-            }
-            if (bHour) {
-                hour = (new String(ch, start, length));
-                //obj.setHour(Integer.parseInt(hour));
-                bHour = false;
-            }
-            if (bMinutes) {
-                minutes = (new String(ch, start, length));
-                //obj.setMinutes(Integer.parseInt(minutes));
-                bMinutes = false;
-            }
-            if (bMessage) {
-                //obj.setMessage(new String(ch, start, length));
-                bMessage = false;
-            }
-
-        }
-
     }
 
     static class DomParser {
@@ -139,7 +108,7 @@ public class Main {
                     Document doc = dBuilder.parse(inputFile);
                     doc.getDocumentElement().normalize();
 
-                    NodeList nList = doc.getElementsByTagName("alarm" + Integer.toString(count -1));
+                    NodeList nList = doc.getElementsByTagName("alarm" + Integer.toString(count - 1));
 
                     for (int temp = 0; temp < nList.getLength(); temp++) {
                         Node nNode = nList.item(temp);
