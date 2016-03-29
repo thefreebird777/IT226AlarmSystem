@@ -1,10 +1,15 @@
 package it226;
 
+import org.w3c.dom.Node;
+
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import javax.swing.JOptionPane;
 
 public class AlarmBase {
+
+	Main main = new Main();
+	public static  Node node;
     public static int alarmDay;
     public static int alarmMonth;
     public static int alarmHour;
@@ -14,8 +19,9 @@ public class AlarmBase {
 	
     
     //date alarm
-    public AlarmBase(int alarmH, int alarmM, String alarmMessage, int alarmDay, int alarmMonth) {
+    public AlarmBase(Node node, int alarmH, int alarmM, String alarmMessage, int alarmDay, int alarmMonth) {
             super();
+			setNode(node);
             setDateAlarmHour(alarmH);
             setDateAlarmMinute(alarmM);
 			setAlarmMessage(alarmMessage);
@@ -88,6 +94,7 @@ public class AlarmBase {
 		};
 		t.setPriority(Thread.MIN_PRIORITY);
 		t.start();
+		main.deletion(getNode());
 	}
 	
 	   public void setDateAlarmHour(int alarmH)
@@ -148,5 +155,12 @@ public class AlarmBase {
 	           else
 	                   System.out.println("invalid alarm day");
 	   }
-	 	
+
+	public static void setNode(Node node) {
+		AlarmBase.node = node;
+	}
+
+	public static Node getNode() {
+		return node;
+	}
 }

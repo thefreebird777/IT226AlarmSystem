@@ -43,6 +43,7 @@ public class Main {
 
     static class UserHandler extends DefaultHandler {
         AlarmBase alarmBase;
+        Node nNode;
         String month;
         String day;
         String hour;
@@ -62,7 +63,7 @@ public class Main {
                     NodeList nList = doc.getElementsByTagName("alarm" + Integer.toString(count - 1));
 
                     for (int temp = 0; temp < nList.getLength(); temp++) {
-                        Node nNode = nList.item(temp);
+                        nNode = nList.item(temp);
                         if (nNode.getNodeType() == Node.ELEMENT_NODE) {
                             Element eElement = (Element) nNode;
                             month = eElement.getElementsByTagName("month").item(0).getTextContent();
@@ -72,7 +73,7 @@ public class Main {
                             message  = eElement.getElementsByTagName("message").item(0).getTextContent();
                         }
                     }
-                    alarmBase = new AlarmBase(Integer.parseInt(hour), Integer.parseInt(minutes), message, Integer.parseInt(day), Integer.parseInt(month));
+                    alarmBase = new AlarmBase(nNode, Integer.parseInt(hour), Integer.parseInt(minutes), message, Integer.parseInt(day), Integer.parseInt(month));
                 }
             } catch (ParserConfigurationException e) {
                 e.printStackTrace();
@@ -181,5 +182,7 @@ public class Main {
             }
         }
     }
-
+    public void deletion(Node node){
+        node.getParentNode().removeChild(node);
+    }
 }
