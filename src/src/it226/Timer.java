@@ -1,5 +1,5 @@
-package it226;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import javax.swing.JOptionPane;
@@ -16,7 +16,7 @@ import javax.swing.JOptionPane;
  */
 public class Timer extends javax.swing.JFrame {
     /**
-     * Creates new form it226.Timer
+     * Creates new form Timer
      */
     public Timer() {
         initComponents();
@@ -133,7 +133,7 @@ public class Timer extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void submitButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButActionPerformed
-       
+       Calendar c = new GregorianCalendar();
         if(this.hourField.getText().equals("")||this.minuteField.getText().equals("")){
             JOptionPane.showMessageDialog(this, "Error: Invalid Field");
             this.dispose();
@@ -149,11 +149,20 @@ public class Timer extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Error: For timers 24 hours or longer \n please use an alarm clock");
             return;
         }
+       
+        if(c.get(Calendar.AM_PM)==1){
+         hour=(hour+c.get(Calendar.HOUR)+12)%24;
+       }
+       else{
+         hour=(hour+c.get(Calendar.HOUR))%24;
+       }
+         
          if(minute>59||minute<0){
             JOptionPane.showMessageDialog(this, "Error: Minute times can only\n be between 0-59");
             return;
         }
-         JOptionPane.showMessageDialog(this, "it226.Timer Set!");
+         minute=(minute+c.get(Calendar.MINUTE))%60;
+         JOptionPane.showMessageDialog(this, "Timer Set!");
          if(this.messageText.getText().equals("Enter message Here:")){
             this.messageText.setText("");
         }
@@ -187,7 +196,6 @@ public class Timer extends javax.swing.JFrame {
         else{
             this.hourLabel.setText(hours+":"+mins);
         }
-        this.hourLabel.setText(hours+":"+mins);
     }//GEN-LAST:event_formWindowOpened
 
     /**

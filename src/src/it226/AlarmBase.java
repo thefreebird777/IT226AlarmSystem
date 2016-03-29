@@ -1,5 +1,3 @@
-package it226;
-
 import org.w3c.dom.Node;
 
 import javax.swing.*;
@@ -31,8 +29,8 @@ public class AlarmBase {
     //countdown alarm
     public AlarmBase(int alarmH, int alarmM, String alarmMessage) {
         super();
-        setTimerAlarmHour(alarmH);
-        setTimerAlarmMinute(alarmM);
+        setDateAlarmHour(alarmH);
+        setDateAlarmMinute(alarmM);
         setAlarmMessage(alarmMessage);
     }
 
@@ -132,15 +130,6 @@ public class AlarmBase {
         return alarmHour;
     }
 
-    public void setTimerAlarmHour(int alarmH) {
-        Calendar c = new GregorianCalendar();
-        int hours = c.get(Calendar.HOUR);
-        if ((alarmH >= 0) && (alarmH <= 24))
-            this.alarmHour = alarmH + hours;
-        else
-            System.out.println("invalid alarm hour");
-    }
-
     public void setDateAlarmMinute(int alarmH) {
         if ((alarmH >= 0) && (alarmH <= 24))
             this.alarmHour = alarmH;
@@ -148,14 +137,6 @@ public class AlarmBase {
             System.out.println("invalid alarm hour");
     }
 
-    public void setTimerAlarmMinute(int alarmM) {
-        Calendar c = new GregorianCalendar();
-        int mins = c.get(Calendar.MINUTE);
-        if ((alarmM >= 0) && (alarmM <= 59))
-            this.alarmMinute = alarmM + mins;
-        else
-            System.out.println("invalid alarm minute");
-    }
 
     public void setAlarmMessage(String alarmMessage) {
         this.alarmMessage = alarmMessage;
