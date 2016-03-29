@@ -12,7 +12,6 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.File;
 import java.io.IOException;
-import java.util.Scanner;
 
 /**
  * Created by Ian on 3/24/2016.
@@ -20,7 +19,7 @@ import java.util.Scanner;
 public class SaxParser {
     static public void main(String[] args) throws ParserConfigurationException, SAXException, IOException {
         DomParser domParser = new DomParser();
-        domParser.run();
+        //domParser.write();
         File file = new File("Instance.xml");
         SAXParserFactory spf = SAXParserFactory.newInstance();
         spf.setNamespaceAware(true);
@@ -100,7 +99,7 @@ public class SaxParser {
     }
 
     static class DomParser {
-        public void run() {
+        public void write(String writeAlarm, String writeDay, String writeHour, String writeMinutes, String writeMessage) {
             try {
 
                 DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
@@ -111,23 +110,23 @@ public class SaxParser {
                 doc.appendChild(rootElement);
 
                 Element month = doc.createElement("month");
-                month.appendChild(doc.createTextNode(obj.getMonth()));
+                month.appendChild(doc.createTextNode(writeAlarm));
                 rootElement.appendChild(month);
 
                Element day = doc.createElement("day");
-                day.appendChild(doc.createTextNode(obj.getDay()));
+                day.appendChild(doc.createTextNode(writeDay));
                 rootElement.appendChild(day);
 
                 Element hour = doc.createElement("hour");
-                hour.appendChild(doc.createTextNode(obj.getHour()));
+                hour.appendChild(doc.createTextNode(writeHour));
                 rootElement.appendChild(hour);
 
                 Element minutes = doc.createElement("minutes");
-                minutes.appendChild(doc.createTextNode(obj.getMinutes()));
+                minutes.appendChild(doc.createTextNode(writeMinutes));
                 rootElement.appendChild(minutes);
 
                 Element message = doc.createElement("message");
-                message.appendChild(doc.createTextNode(obj.getMessage()));
+                message.appendChild(doc.createTextNode(writeMessage));
                 rootElement.appendChild(message);
 
                 TransformerFactory transformerFactory = TransformerFactory.newInstance();
