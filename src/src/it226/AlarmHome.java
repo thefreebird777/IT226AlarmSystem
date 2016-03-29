@@ -324,7 +324,7 @@ public class AlarmHome extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Error: Invalid day of month");
                 return;
             }
-            JOptionPane.showMessageDialog(this, "it226.Timer Set!");
+            JOptionPane.showMessageDialog(this, "Timer Set!");
             if(this.messageText.getText().equals("Enter message Here:")){
                 this.messageText.setText("");
             }

@@ -33,11 +33,11 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) throws ParserConfigurationException, IOException {
-        DomParser domParser = new DomParser();
-        domParser.write("4", "7", "9", "11", "Test");
-        domParser.write("5", "11", "23", "1444", "Test2");
-        domParser.write("6", "19", "14", "738", "Test3");
-        domParser.write("7", "634", "3", "112", "Test4");
+//        DomParser domParser = new DomParser();
+//        domParser.write("4", "7", "9", "11", "Test");
+//        domParser.write("5", "11", "23", "1444", "Test2");
+//        domParser.write("6", "19", "14", "738", "Test3");
+//        domParser.write("7", "634", "3", "112", "Test4");
         AlarmHome main = new AlarmHome();
         main.setVisible(true);
         UserHandler userhandler = new UserHandler();
@@ -76,7 +76,10 @@ public class Main {
                             message = eElement.getElementsByTagName("message").item(0).getTextContent();
                         }
                     }
-                    alarmBase = new AlarmBase(nNode, Integer.parseInt(hour), Integer.parseInt(minutes), message, Integer.parseInt(day), Integer.parseInt(month));
+                    if(minutes!=null){
+                        alarmBase = new AlarmBase(nNode, Integer.parseInt(hour), Integer.parseInt(minutes), message, Integer.parseInt(day), Integer.parseInt(month));
+                    }
+
                 }
             } catch (ParserConfigurationException e) {
                 e.printStackTrace();
