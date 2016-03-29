@@ -4,17 +4,17 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import javax.swing.JOptionPane;
 
-public class AlarmClock {
-	public static int alarmDay;
+public class AlarmBase {
+    public static int alarmDay;
     public static int alarmMonth;
-	public static int alarmHour;
+    public static int alarmHour;
     public static int alarmMinute;
     public static String alarmMessage;
     public static int alarmDate;
 	
     
     //date alarm
-    public AlarmClock(int alarmH, int alarmM, String alarmMessage, int alarmDay, int alarmMonth) {
+    public AlarmBase(int alarmH, int alarmM, String alarmMessage, int alarmDay, int alarmMonth) {
             super();
             setDateAlarmHour(alarmH);
             setDateAlarmMinute(alarmM);
@@ -24,7 +24,7 @@ public class AlarmClock {
     }
     
     //countdown alarm
-    public AlarmClock(int alarmH, int alarmM, String alarmMessage) {
+    public AlarmBase(int alarmH, int alarmM, String alarmMessage) {
             super();
             setTimerAlarmHour(alarmH);
             setTimerAlarmMinute(alarmM);
@@ -36,28 +36,35 @@ public class AlarmClock {
 		 Calendar c = new GregorianCalendar();
 	    	
 //	    if(date alarm button is clicked) {
-		AlarmClock alarm = new AlarmClock(alarmHour, alarmMinute, alarmMessage, alarmDay, alarmMonth);
+		//it226.AlarmBase alarm = new it226.AlarmBase(alarmHour, alarmMinute, alarmMessage, alarmDay, alarmMonth);
 //		if(alarm.alarmDay == 0 && alarm.alarmDay == 0) {
 //			
 //		}
 		//hour minute is entered
-		System.out.println(alarm.getDateAlarmHour() + ": " + alarm.alarmMinute);
+		//System.out.println(alarm.getDateAlarmHour() + ": " + alarm.alarmMinute);
 		//current month and day
-		System.out.println(alarm.alarmMonth + " / " + alarm.alarmDay);
+		//System.out.println(alarm.alarmMonth + " / " + alarm.alarmDay);
 
 
 //			alarm.checkAlarm(alarmHour,alarmMinute);
 //	    }
 //	    if(countdown alarm button is clicked) {
-			AlarmClock alarm2 = new AlarmClock(alarmDate, alarmDate, alarmMessage);
+		//	it226.AlarmBase alarm2 = new it226.AlarmBase(alarmDate, alarmDate, alarmMessage);
 			//firetime of alarm
-			System.out.println(alarm2.alarmHour + ": " + alarm2.alarmMinute);
-			alarm2.checkAlarm(alarmHour,alarmMinute);
+			//System.out.println(alarm2.alarmHour + ": " + alarm2.alarmMinute);
+			//alarm2.checkAlarm(alarmHour,alarmMinute);
 //	    }
 		
 	}
-	
-	public void checkAlarm(final int hr, final int min) {
+	public static AlarmBase createTimer(int hour, int minute,String message){
+            AlarmBase alarm2 = new AlarmBase(hour, minute, alarmMessage);
+			//firetime of alarm
+			System.out.println(hour + ": " + minute);
+			alarm2.checkAlarm(hour,minute,message);
+                        return alarm2;
+        }
+        
+	public void checkAlarm(final int hr, final int min, final String message) {
 		Thread t = new Thread() {
 			
 			public void run() {
@@ -67,8 +74,14 @@ public class AlarmClock {
 					int hours = c.get(Calendar.HOUR);
 					int mins = c.get(Calendar.MINUTE);
 					if(hr <= hours && min <= mins) {
+                                            if(message.equals("")){
 						JOptionPane.showMessageDialog(null, "Time is UP!");
 						break;
+                                            }
+                                            else{
+                                                JOptionPane.showMessageDialog(null, message);
+						break;
+                                            }
 					}
 				}
 			}

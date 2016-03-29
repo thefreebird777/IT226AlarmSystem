@@ -1,12 +1,18 @@
 <?xml version="1.0"?>
-<xs:element name="alarm" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:element name="alarms" xmlns:xs="http://www.w3.org/2001/XMLSchema">
     <xs:complexType>
         <xs:sequence>
-            <xs:element name="month" type="xs:integer"/>
-            <xs:element name="day" type="xs:integer"/>
-            <xs:element name="hour" type="xs:integer"/>
-            <xs:element name="minutes" type="xs:integer"/>
-            <xs:element name="message" type="xs:string"/>
+            <xs:element name="alarm">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="month" type="xs:integer"/>
+                        <xs:element name="day" type="xs:integer"/>
+                        <xs:element name="hour" type="xs:integer"/>
+                        <xs:element name="minutes" type="xs:integer"/>
+                        <xs:element name="message" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
         </xs:sequence>
     </xs:complexType>
 </xs:element>
