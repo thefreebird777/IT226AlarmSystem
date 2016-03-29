@@ -1,5 +1,5 @@
-package it226;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import javax.swing.JOptionPane;
@@ -15,14 +15,14 @@ import javax.swing.JOptionPane;
  * @author Daniel
  */
 public class Timer extends javax.swing.JFrame {
-
     /**
-     * Creates new form it226.Timer
+     * Creates new form Timer
      */
     public Timer() {
         initComponents();
     }
     String message="";
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -153,7 +153,7 @@ public class Timer extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Error: Minute times can only\n be between 0-59");
             return;
         }
-         JOptionPane.showMessageDialog(this, "it226.Timer Set!");
+         JOptionPane.showMessageDialog(this, "Timer Set!");
          if(this.messageText.getText().equals("Enter message Here:")){
             this.messageText.setText("");
         }
@@ -161,7 +161,7 @@ public class Timer extends javax.swing.JFrame {
              message=messageText.getText();
          }
         
-        AlarmBase timer= AlarmBase.createTimer(hour,minute,message);
+        AlarmBase timer= AlarmBase.createTimer(hour,minute,message); 
         this.dispose();
     }//GEN-LAST:event_submitButActionPerformed
 
@@ -173,8 +173,14 @@ public class Timer extends javax.swing.JFrame {
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
        Calendar c = new GregorianCalendar();
-	int hours = c.get(Calendar.HOUR);
+	int hours = c.get(Calendar.HOUR)+12;
 	int mins = c.get(Calendar.MINUTE);
+        if(mins<10){
+        this.hourLabel.setText(hours+":0"+mins);
+        }
+        else{
+            this.hourLabel.setText(hours+":"+mins);
+        }
         this.hourLabel.setText(hours+":"+mins);
     }//GEN-LAST:event_formWindowOpened
 

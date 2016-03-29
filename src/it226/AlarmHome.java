@@ -1,4 +1,4 @@
-package it226;/*
+/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -11,7 +11,7 @@ package it226;/*
 public class AlarmHome extends javax.swing.JFrame {
 
     /**
-     * Creates new form it226.AlarmHome
+     * Creates new form AlarmHome
      */
     public AlarmHome() {
         initComponents();
@@ -32,7 +32,7 @@ public class AlarmHome extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         timer.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        timer.setText("it226.Timer");
+        timer.setText("Timer");
         timer.setToolTipText("Create a new timer");
         timer.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
