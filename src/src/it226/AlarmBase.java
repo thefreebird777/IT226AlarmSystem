@@ -25,6 +25,13 @@ public class AlarmBase {
         setAlarmDay(alarmDay);
         setAlarmMonth(alarmMonth);
     }
+    public AlarmBase(Node node, int alarmH, int alarmM, String alarmMessage) {
+        super();
+        setNode(node);
+        setDateAlarmHour(alarmH);
+        setDateAlarmMinute(alarmM);
+        setAlarmMessage(alarmMessage);
+    }
 
     //countdown alarm
     public AlarmBase(int alarmH, int alarmM, String alarmMessage) {
