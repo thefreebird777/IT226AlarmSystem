@@ -1,5 +1,3 @@
-package it226;
-
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -33,11 +31,6 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) throws ParserConfigurationException, IOException {
-//        DomParser domParser = new DomParser();
-//        domParser.write("4", "7", "9", "11", "Test");
-//        domParser.write("5", "11", "23", "1444", "Test2");
-//        domParser.write("6", "19", "14", "738", "Test3");
-//        domParser.write("7", "634", "3", "112", "Test4");
         AlarmHome main = new AlarmHome();
         main.setVisible(true);
         UserHandler userhandler = new UserHandler();
@@ -63,7 +56,7 @@ public class Main {
                     Document doc = dBuilder.parse(inputFile);
                     doc.getDocumentElement().normalize();
 
-                    NodeList nList = doc.getElementsByTagName("alarm" + Integer.toString(count - 1));
+                    NodeList nList = doc.getElementsByTagName("alarm" + Integer.toString(0));
 
                     for (int temp = 0; temp < nList.getLength(); temp++) {
                         nNode = nList.item(temp);
@@ -76,8 +69,13 @@ public class Main {
                             message = eElement.getElementsByTagName("message").item(0).getTextContent();
                         }
                     }
-                    if(minutes!=null){
+                    if(day.equals("")&&month.equals("")){
+                        alarmBase = new AlarmBase(nNode, Integer.parseInt(hour), Integer.parseInt(minutes), message);
+                        alarmBase.checkAlarm(Integer.parseInt(hour),Integer.parseInt(minutes) , message);
+                    }
+                    else{
                         alarmBase = new AlarmBase(nNode, Integer.parseInt(hour), Integer.parseInt(minutes), message, Integer.parseInt(day), Integer.parseInt(month));
+                         alarmBase.checkAlarm(Integer.parseInt(hour),Integer.parseInt(minutes) , message,Integer.parseInt(day), Integer.parseInt(month));
                     }
 
                 }
